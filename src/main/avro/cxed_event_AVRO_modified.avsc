@@ -1,0 +1,146 @@
+{
+  "name": "DnDOnlineCalculatorV1",
+  "type": "record",
+  "namespace": "emp.maersk.com",
+  "fields": [
+    {
+      "name": "_id",
+      "type": "string"
+    },
+    { "name": "chargeType","type": "string", "doc":"The charge type for demurrage and detention" },
+    { "name": "activityLocation", "type": "string", "doc":"Discharge port location (RKTS code)"},
+    { "name": "billOfLadingNumber","type": "string", "doc":"Bill of Lading number" },
+    { "name": "billOfLadingDetails",
+      "type": {
+        "name": "billOfLadingDetails", "type": "record",
+        "fields": [
+          {"name": "vesselCode","type": "string", "doc":"vessel code for last leg of shipment" },
+          {"name": "voyageNumber","type": "string", "doc":"voyage number for last leg of shipment" },
+          {"name": "vesselRouteCode","type": "string", "doc":"The route code" },
+          {"name": "shipperCustomerCode","type": "string", "doc":"Customer code of the shipper" },
+          {"name": "consigneeCustomerCode","type": "string", "doc":"Customer code of the consignee" },
+          {"name": "forwarderOutwardCustomerCode","type": "string", "doc":"Customer code of the outward forwarder" },
+          {"name": "importForwarderCustomerCode","type": "string", "doc":"Customer code of the import forwarder" },
+          {"name": "demurragePayerCustomerCode","type": "string", "doc":"Customer code of the demurrage payer" },
+          {"name": "detentionPayerCustomerCode","type": "string", "doc":"Customer code of the detention payer" }
+        ]
+      }
+    },
+    {"name": "equipments",
+      "type": {
+        "type": "array",
+        "items": {
+          "name": "equipments",
+          "type": "record",
+          "fields": [
+            { "name": "equipmentNumber","type": "string", "doc":"The equipment number" },
+            { "name": "equipmentSizeType","type": "string", "doc":"Equipment size and type" },
+            { "name": "calculationResult",
+              "type": {
+                "name": "calculationResult",
+                "type": "record",
+                "fields": [
+                  {"name": "returnCode","type": "string", "doc":"CXED response code" },
+                  {
+                    "name": "calculationType",
+                    "type": {
+                      "name": "calculationType",
+                      "type": "enum",
+                      "symbols": [
+                        "Estimated","Actual"
+                      ]
+                    }, "doc": "The calculation type"
+                  },
+                  {"name": "calculationTriggerName","type": "string", "doc":"The name of the trigger that fired the calculation" },
+                  {"name": "sequenceNumber","type": "string", "doc":"Calculation sequence number" },
+                  {"name": "tariffLocation","type": "string", "doc":"Tariff location RKDS code" },
+                  {
+                    "name": "calculatedByUser",
+                    "type": "string"
+                  },
+                  {"name": "calculatedAtDateTime","type": "string", "doc":"The timestamp of calculation" },
+                  {
+                    "name": "freeTime",
+                    "type": {
+                      "name": "freeTime",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "freeTimeUnit",
+                          "type": {
+                            "name": "freeTimeUnit",
+                            "type": "enum",
+                            "symbols": [
+                              "Days","Hours","Minutes"
+                            ]
+                          }, "doc": "The duration unit used for counting free time"
+                        },
+                        {"name": "freeTimeCount","type": "int", "doc":"The count of number of days/hours/minutes" },
+                        {"name": "startEvent","type": "string", "doc":"The event name that triggered free time meterage" },
+                        {"name": "agreementNumber","type": "string", "doc":"The agreement number of deal filed in CXED, that was being used for calculation" },
+                        {"name": "agreementLineItemNumber","type": "string", "doc":"The agreements line item number" },
+                        {"name": "dealTypeCode","type": "string", "doc":"The type of deal filed" },
+                        {"name": "startDateTime","type": "string", "doc":"Date-Time of the start of free time period" },
+                        {"name": "endDateTime","type": "string", "doc":"Date-Time of the end of free time period" }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "chargeDetails",
+                    "type": {
+                      "name": "chargeDetails",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "rateBasis",
+                          "type": {
+                            "name": "rateBasis",
+                            "type": "enum",
+                            "symbols": [
+                              "DAY","Hours","Minutes"
+                            ]
+                          }, "doc": "The duration unit based on which charges are calculated"
+                        },
+                        {"name": "rateBasisCount","type": "string", "doc":"The number of days/hours/minutes based on which charges are calculated"},
+                        {"name": "currencyCode","type": "string", "doc":"The currency code" },
+                        {"name": "amount","type": "float", "doc":"The charge amount" },
+                        {"name": "endEvent","type": "string", "doc":"The end event, that marks the ends of billing time. (Eg. Gate out for DMR)" },
+                        {"name": "agreementNumber","type": "string", "doc":"The agreement number of deal filed in CXED, that was being used for calculation" },
+                        {"name": "agreementLineItemNumber","type": "string", "doc":"The agreements line item number" },
+                        {"name": "isForceMajeure","type": "boolean", "doc":"A flag that indicates if force majeure is applicable" },
+                        {"name": "isStartWorkDay","type": "boolean", "doc":"A flag that indicates if work day is applicable" },
+                        {"name": "dealTypeCode","type": "string", "doc":"The code for the type of deal" },
+                        {"name": "startDate","type": "string", "doc":"The date that marks the start of billing" },
+                        {"name": "endDate","type": "string", "doc":"The date that marks the end of the billing" },
+                        {"name": "tierCount","type": "int", "doc":"The numer of billing tiers applicable" },
+                        {"name" :"tierDetail",
+                          "type":[
+                            "null",
+                            {"type":"array",
+                              "items":
+                              {
+                                "name": "tierDetail",
+                                "doc":"dnd tier classififcation information",
+                                "type": "record",
+                                "fields": [
+                                  {"name": "chargeAmountPerUnit","type": "float", "doc":"The amount to be charged for each unit" },
+                                  {"name": "dayCount","type": "int", "doc":"The number of days, that the tier is comprised of" },
+                                  {"name": "tierPriceStartDate","type": "string", "doc":"The date that marks the start of the tier pricing" },
+                                  {"name": "tierPriceEndDate","type": "string", "doc":"The date that marks the end of the tier pricing" }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

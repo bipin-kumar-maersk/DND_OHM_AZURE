@@ -1,0 +1,10 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "MAIN_CLASS":"net.apmoller.azure.dnd.DndApplication",
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=storageaccountrgaze89c7;AccountKey=8dUmR8AxMwGkRWJS8HHUNERxgBlherHnxjUcwMpoZeb9sL+p3xzGOQ0EBVrOFG6IC1bdTbhNgMTALnMEH1jG+A==;EndpointSuffix=core.windows.net",
+    "FUNCTIONS_WORKER_RUNTIME": "java",
+    "dndstorageaccount": "DefaultEndpointsProtocol=https;AccountName=dndtrial;AccountKey=hySHATFLE/MFx8dkDG5+2QYc3AZlQFC5eWHG1fMTJIvLrL7qCQhK2JFDOG2f6BuyGzDiMeO5Ve16cJY0i0E/rA==;EndpointSuffix=core.windows.net"
+  }
+
+}

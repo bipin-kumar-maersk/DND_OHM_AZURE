@@ -1,0 +1,62 @@
+topic:
+  name:
+    customers: dnd_topic
+
+  partitions-num: 6
+  replication-factor: 3
+
+azure:
+  storage:
+    account-name: "dndtrial"
+    account-key: "hySHATFLE/MFx8dkDG5+2QYc3AZlQFC5eWHG1fMTJIvLrL7qCQhK2JFDOG2f6BuyGzDiMeO5Ve16cJY0i0E/rA=="
+    blob-endpoint: "https://dndtrial.blob.core.windows.net/"
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      format_sql: true
+
+  kafka:
+    auto:
+      create:
+        topics:
+          enable: true
+    bootstrap-servers:
+      - pkc-epwny.eastus.azure.confluent.cloud:9092
+    properties:
+      ssl.endpoint.identification.algorithm: https
+      sasl.mechanism: PLAIN
+      request.timeout.ms: 20000
+      retry.backoff.ms: 500
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="ECTK7AZ6YLWI5VEB" password="mxGKh50WhkNrem91BVpRTwu6tTAmub/utlJFNOBeyIorKTd66hPpjsVThHqlM3SI";
+      security.protocol: SASL_SSL
+      schema.registry.url: https://psrc-j39np.westeurope.azure.confluent.cloud
+      basic.auth.credentials.source: USER_INFO
+      schema.registry.basic.auth.user.info: BAMJ6DTNXUCIKYMG:QXma6yY4iVtTewHigL+vxRp6AiuydgdZ1f1TlTi+9zeavwYh65uFG0CmTlc0+xvq
+    consumer:
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      properties:
+        specific.avro.reader: true
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+
+  logging:
+    level:
+      root: info
+  profiles:
+    active: local
+
+
+
+
+
+
+
+
+
+
+
